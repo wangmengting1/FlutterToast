@@ -61,9 +61,9 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
     if([@"cancel" isEqualToString:call.method]) {
         __weak typeof(self) weakSelf = self;
         if ([[weakSelf _readKeyWindow] respondsToSelector:@selector(hideAllToasts)]) {
-            [[weakSelf _readKeyWindow] hideAllToasts];
+            [[weakSelf _readKeyWindow] performSelector:@selector(hideAllToasts)];
         } else if ([[weakSelf _readKeyWindow] respondsToSelector:@selector(hideToasts)]) {
-            [[weakSelf _readKeyWindow] hideToasts];
+            [[weakSelf _readKeyWindow] performSelector:@selector(hideToasts)];
         }
         result([NSNumber numberWithBool:true]);
     } else if ([@"showToast" isEqualToString:call.method]) {
