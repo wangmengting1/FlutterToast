@@ -60,7 +60,11 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if([@"cancel" isEqualToString:call.method]) {
         __weak typeof(self) weakSelf = self;
-        [[weakSelf _readKeyWindow] hideAllToasts];
+        if ([[weakSelf _readKeyWindow] respondsToSelector:@selector(hideAllToasts)]) {
+            [[weakSelf _readKeyWindow] hideAllToasts];
+        } else if ([[weakSelf _readKeyWindow] respondsToSelector:@selector(hideToasts)]) {
+            [[weakSelf _readKeyWindow] hideToasts];
+        }
         result([NSNumber numberWithBool:true]);
     } else if ([@"showToast" isEqualToString:call.method]) {
         NSString *msg = call.arguments[@"msg"];
